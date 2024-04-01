@@ -25,34 +25,34 @@ const httpOptions = {
 export class WelcomeComponent {
   listOfDataDashBoard: any;
 
-  tongSlSpNhapKho: number = 0;// tổng số lượng nhập kho
-  tongSlSpKhongDat: number = 0;// tổng số lượng không đạt
-  tiLeSpDat: number = 0;
-  tiLeSpLoiQuaTrinh: number = 0;
-  tongSlBTPNhapKho: number = 0;
-  tongSlBTPKhongDat: number = 0;
-  tiLeBTPDat: number = 0;
-  tiLeBTPLoiQuaTrinh: number = 0;
-  choPheDuyetLenhSX: number = 0;
-  choPheDuyetBBKT: number = 0;
-  soLoKT: number = 0;
-  soLoKhongDat: number = 0;
-  soLoNhanNhuong: number = 0;
-  slVatTuNhap: number = 0;
-  slVatTuDat: number = 0;
-  slVatTuKhongDat: number = 0;
-  slVatTuNhanNhuong: number = 0;
-  tiLeLoiVatTuQTSX: number = 0;
-  tongSoNCC: number = 0;
-  tongSoBienBanIQC: number = 0;
-  tongSoMauDoSP: number = 0;
-  soMauSPDat: number = 0;
-  tiLeSPDatThongSo: number = 0;
-  soMauSPKhongDat: number = 0;
-  tongSoMauDoBTPDrv: number = 0;
-  soMauBTPDrvDat: number = 0;
-  tiLeBTPDrvDatThongSo: number = 0;
-  soMauBTPDrvKhongDat: number = 0;
+  tongSlSpNhapKho: number = 0;// 9. tổng số lượng nhập kho
+  tongSlSpKhongDat: number = 0;// 10. tổng số lượng không đạt
+  tiLeSpDat: number = 0; //11.
+  tiLeSpLoiQuaTrinh: number = 0; //12.
+  tongSlBTPNhapKho: number = 0; //13.
+  tongSlBTPKhongDat: number = 0; //14.
+  tiLeBTPDat: number = 0; //15.
+  tiLeBTPLoiQuaTrinh: number = 0; //16.
+  choPheDuyetLenhSX: number = 0; //17.
+  choPheDuyetBBKT: number = 0; //18.
+  soLoKT: number = 0; //19.
+  soLoKhongDat: number = 0; //20.
+  soLoNhanNhuong: number = 0; //21.
+  slVatTuNhap: number = 0; //22.
+  slVatTuDat: number = 0; //23.
+  slVatTuKhongDat: number = 0; //24.
+  slVatTuNhanNhuong: number = 0; //25.
+  tiLeLoiVatTuQTSX: number = 0; //26.
+  tongSoNCC: number = 0; //27.
+  tongSoBienBanIQC: number = 0; //28.
+  tongSoMauDoSP: number = 0; //29.
+  soMauSPDat: number = 0; //30.
+  tiLeSPDatThongSo: number = 0; //31.
+  soMauSPKhongDat: number = 0; //32.
+  tongSoMauDoBTPDrv: number = 0; //33.
+  soMauBTPDrvDat: number = 0; //34.
+  tiLeBTPDrvDatThongSo: number = 0; //35.
+  soMauBTPDrvKhongDat: number = 0; //36.
 
   popupReport = false;
   popupConfig = false;
@@ -499,21 +499,25 @@ export class WelcomeComponent {
   getAllDataDashBoard(): void {
     this.http.get<any>('http://localhost:8449/dashboard/home').subscribe(res => {
       this.listOfDataDashBoard = res;
+      this.choPheDuyetLenhSX = res.countIqcWaitApproveStatus
+      this.choPheDuyetBBKT = res.countWorkOrderWaitStatus
+      this.soLoKhongDat = res.pqcQuantityDashResponseList.conclude
+      this.soLoNhanNhuong = res.pqcQuantityDashResponseList.conclude
       // tính toán dữ liệu và lưu vào biến hiển thị
       /** THông tin chất lượng sản phẩm
        * @param: 1 - Tổng số lượng nhập kho - slNhapKho storages
        * @param:
-       */
+      */
       for (let i = 0; i < this.listOfDataDashBoard.pqcStoreCheckList.length; i++) {
         // code in here
-        if (this.listOfDataDashBoard.pqcStoreCheckList.conclude === "Đạt") {
-
+        if (this.listOfDataDashBoard.pqcStoreCheckList.conclude === 'Đạt') {
+          this.soLoKT = this.listOfDataDashBoard.pqcQuantityDashResponseList[i].conclude
         }
-
+        // console.log("19", this.listOfDataDashBoard.pqcQuantityDashResponseList[i].conclude)
       }
 
+
       console.log('result dashboard', res);
-      console.log('result dashboard', this.listOfDataDashBoard);
     })
   }
 
